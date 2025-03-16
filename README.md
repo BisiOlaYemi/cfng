@@ -59,3 +59,13 @@ The build artifacts will be stored in the `dist/` directory.
 ## License
 
 This project is licensed under the MIT License.
+
+## Email Integration
+
+This application uses EmailJS to send form submissions via email. To set up EmailJS:
+
+1. Create an account at [EmailJS](https://www.emailjs.com/)
+2. Set up an email service and template
+3. Update the credentials in `src/components/ApplicationForm.tsx`
+
+For detailed setup instructions, see [EMAILJS_SETUP.md](./EMAILJS_SETUP.md).
