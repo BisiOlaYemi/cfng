@@ -50,39 +50,51 @@ const ApplicationForm: React.FC = () => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
+ 
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitStatus(null);
+  
+    const serviceId = 'service_a4f6dvx';  
+    const templateId = 'template_wn7ghhg'; 
+    const publicKey = 'j66Hr_HuW31Ed0ziZ';    
+  
+    // Multiple recipients (ensure your EmailJS template has {{to_email}})
+    // const toEmails = "engineerafolabi@gmail.com, ichambers@cfan.org"; 
+  
     
-   
-    const serviceId = 'YOUR_SERVICE_ID';  
-    const templateId = 'YOUR_TEMPLATE_ID'; 
-    const publicKey = 'YOUR_PUBLIC_KEY';   
+    const emailData = {
+      to_email: "engineerafolabi@gmail.com, ichambers@cfan.org",
+      ...formData, // This spreads the form data fields
+    };
     
+    emailjs.send(serviceId, templateId, emailData, publicKey)
     
+  
     emailjs.sendForm(serviceId, templateId, formRef.current!, publicKey)
-      .then((result) => {
-        console.log('Email successfully sent!', result.text);
-        setSubmitStatus({
-          success: true,
-          message: 'Your application has been submitted successfully! We will contact you soon.'
-        });
-        // reset the form after successful submission
-        // setFormData({ ... initial state ... });
-      })
-      .catch((error) => {
-        console.error('Failed to send email:', error.text);
-        setSubmitStatus({
-          success: false,
-          message: 'There was an error submitting your application. Please try again later.'
-        });
-      })
-      .finally(() => {
-        setIsSubmitting(false);
-      });
+        .then((result) => {
+          console.log("Email successfully sent!", result.text);
+          setSubmitStatus({
+            success: true,
+            message: "Your application has been submitted successfully! We will contact you soon."
+          });
+        })
+        .catch((error) => {
+          console.error("Failed to send email:", error.text);
+          setSubmitStatus({
+            success: false,
+            message: "There was an error submitting your application. Please try again later."
+          });
+        })
+        .finally(() => {
+          setIsSubmitting(false);
+    });
+
   };
+  
+  
 
   const titleOptions = [
     { value: 'Mr', label: 'Mister' },
